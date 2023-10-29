@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include <ctype.h>
 
 typedef struct WordNode_struct {
     char* myWord;
@@ -25,7 +26,32 @@ int countWordsOfLength(char* filename, int wordSize) {
     //          return the count, if filename is valid
     //          return -1 if the file cannot be opened
     //---------------------------------------------------------
-    return 0; //modify this
+
+    FILE* dictionary = fopen(filename, "r");
+
+    if (!dictionary){
+        return -1;
+    }
+    
+    int count = 0;
+    char character = '\0';
+
+    while (!feof(dictionary)){
+        int length = 0;
+
+        fscanf(dictionary, "%c", &character);
+        while (!isspace(character) && !feof(dictionary)){
+            fscanf(dictionary, "%c", &character);
+            length++;
+        }
+
+        if (length == wordSize){
+            count++;
+        }
+
+    }
+
+    return count;
 }
 
 bool buildWordArray(char* filename, char** words, int numWords, int wordSize) { 
