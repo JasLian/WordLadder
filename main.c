@@ -16,16 +16,6 @@ typedef struct LadderNode_struct {
 } LadderNode;
 
 int countWordsOfLength(char* filename, int wordSize) { 
-    //---------------------------------------------------------
-    // TODO - write countWordsOfLength()    
-    //      open a file with name <filename> and count the 
-    //      number of words in the file that are exactly 
-    //      <wordSize> letters long, where a "word" is ANY set
-    //      of characters that falls between two whitespaces 
-    //      (or tabs, or newlines, etc.). 
-    //          return the count, if filename is valid
-    //          return -1 if the file cannot be opened
-    //---------------------------------------------------------
 
     FILE* dictionary = fopen(filename, "r");
 
@@ -55,22 +45,29 @@ int countWordsOfLength(char* filename, int wordSize) {
 }
 
 bool buildWordArray(char* filename, char** words, int numWords, int wordSize) { 
-    //---------------------------------------------------------
-    // TODO - write buildWordArray()    
-    //      open a file with name <filename> and fill the 
-    //      pre-allocated word array <words> with only words
-    //      that are exactly <wordSize> letters long;
-    //      the file should contain exactly <numWords> words 
-    //      that are the correct number of letters; thus, 
-    //      <words> is pre-allocated as <numWords> char* ptrs, 
-    //      each pointing to a C-string of legnth <wordSize>+1;
-    //          return true iff the file is opened successfully
-    //                      AND the file contains exactly 
-    //                      <numWords> words of exactly 
-    //                      <wordSize> letters, and those words
-    //                      are stored in the <words> array
-    //          return false otherwise
-    //---------------------------------------------------------
+   
+    FILE* dictionary = fopen(filename, "r");
+
+    if (!dictionary){
+        return false;
+    }
+
+    int arrLen = 0;
+    char currWord[50];
+    while (!feof(dictionary)){
+        fgets(currWord, 49, dictionary);
+
+        if (strlen(currWord) == wordSize){
+            strcpy(words[arrLen], currWord);
+            arrLen++;
+        }
+
+    }
+
+    if (arrLen == numWords){
+        return true;
+    }
+    
     return false;
 }
 
