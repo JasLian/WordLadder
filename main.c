@@ -41,6 +41,8 @@ int countWordsOfLength(char* filename, int wordSize) {
 
     }
 
+    fclose(dictionary);
+
     return count;
 }
 
@@ -64,10 +66,12 @@ bool buildWordArray(char* filename, char** words, int numWords, int wordSize) {
 
     }
 
+    fclose(dictionary);
+
     if (arrLen == numWords){
         return true;
     }
-    
+
     return false;
 }
 
@@ -101,6 +105,13 @@ void freeWords(char** words, int numWords) {
     //           - then, free the space allocated for the array
     //                  of pointers, <words>, itself
     //---------------------------------------------------------
+
+    for (int i = 0; i < numWords; i++){
+        free(words[i]);
+    }
+
+    free(words);
+
 }
 
 void insertWordAtFront(WordNode** ladder, char* newWord) {
@@ -114,6 +125,12 @@ void insertWordAtFront(WordNode** ladder, char* newWord) {
     //          <newWord> is a pointer to a C-string from the 
     //          full word array, already heap-allocated
     //---------------------------------------------------------
+
+    WordNode* newNode = malloc(sizeof(WordNode));
+    newNode->myWord = newWord;
+    newNode->next = *ladder;
+    *ladder = newNode;
+
 }
 
 int getLadderHeight(WordNode* ladder) {
@@ -121,7 +138,14 @@ int getLadderHeight(WordNode* ladder) {
     // TODO - write getLadderHeight()
     //          find & return number of words in <ladder> list
     //---------------------------------------------------------
-    return -1; // modify this line
+
+    if (!ladder){
+        return 0;
+    }
+    else{
+        return 1 + getLadderHeight(ladder->next);
+    }
+
 }
 
 WordNode* copyLadder(WordNode* ladder) {
@@ -134,7 +158,21 @@ WordNode* copyLadder(WordNode* ladder) {
     //          array can be reused; i.e. the actual words do 
     //          NOT need another allocation here
     //---------------------------------------------------------
-    return NULL; //modify this
+
+    int ladderHeight = getLadderHeight(ladder);
+
+    if (ladderHeight == 0){
+        return NULL; 
+    }
+
+    WordNode* newHead;
+    WordNode* curr = newHead;
+    for (int i = 0; i < ladderHeight; i++){
+        curr = malloc(sizeof(WordNode));
+        curr->myWord = ladder->myWord;
+        curr->next = NULL;
+        
+    }
 }
 
 void freeLadder(WordNode* ladder) {
