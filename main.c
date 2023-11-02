@@ -55,7 +55,7 @@ bool buildWordArray(char* filename, char** words, int numWords, int wordSize) {
     int arrLen = 0;
     char currWord[50];
     while (!feof(dictionary)){
-        fgets(currWord, 49, dictionary);
+        fscanf(dictionary, "%s", currWord);
 
         if (strlen(currWord) == wordSize){
             strcpy(words[arrLen], currWord);
@@ -72,15 +72,24 @@ bool buildWordArray(char* filename, char** words, int numWords, int wordSize) {
 }
 
 int findWord(char** words, char* aWord, int loInd, int hiInd) { 
-    //---------------------------------------------------------
-    // TODO - write findWord()
-    //          binary search for string <aWord> in an 
-    //          alphabetically sorted array of strings <words>, 
-    //          only between <loInd> & <hiInd>
-    //              return index of <aWord> if found
-    //              return -1 if not found b/w loInd & hiInd
-    //---------------------------------------------------------
-    return -1; // modify this line
+
+    int midInd = (loInd + hiInd) / 2;
+
+    if (strcmp(words[midInd], aWord) == 0){
+        return midInd;
+    }
+    else if (loInd > hiInd){
+        return -1;
+    }
+    else{
+        if (strcmp(aWord, words[midInd]) < 0){
+            return findWord(words, aWord, loInd, midInd - 1);
+        }
+        else{
+            return findWord(words, aWord, midInd + 1, hiInd);
+        }
+    }
+
 }
 
 void freeWords(char** words, int numWords) {
