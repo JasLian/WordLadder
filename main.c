@@ -159,20 +159,28 @@ WordNode* copyLadder(WordNode* ladder) {
     //          NOT need another allocation here
     //---------------------------------------------------------
 
-    int ladderHeight = getLadderHeight(ladder);
-
-    if (ladderHeight == 0){
+    if (!ladder){
         return NULL; 
     }
 
-    WordNode* newHead;
-    WordNode* curr = newHead;
-    for (int i = 0; i < ladderHeight; i++){
-        curr = malloc(sizeof(WordNode));
-        curr->myWord = ladder->myWord;
-        curr->next = NULL;
-        
+    WordNode* newHead = malloc(sizeof(WordNode));
+    newHead->myWord = ladder->myWord;
+    newHead->next = NULL;
+    WordNode* current = newHead;
+    ladder = ladder->next;
+
+    while (ladder){
+        WordNode* temp = malloc(sizeof(WordNode));
+        temp->myWord = ladder->myWord;
+        temp->next = NULL;
+
+        current->next = temp;
+        current = current->next;
+        ladder = ladder->next;
+
     }
+
+    return newHead;
 }
 
 void freeLadder(WordNode* ladder) {
