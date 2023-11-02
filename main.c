@@ -191,6 +191,11 @@ void freeLadder(WordNode* ladder) {
     //          instead just free up the space that was 
     //          allocated for each [WordNode]
     //---------------------------------------------------------
+    while (ladder){
+        WordNode* temp = ladder->next;
+        free(ladder);
+        ladder = temp;
+    }
 }
 
 void insertLadderAtBack(LadderNode** list, WordNode* newLadder) {
