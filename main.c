@@ -243,7 +243,18 @@ WordNode* popLadderFromFront(LadderNode** list) {
     //          will go out of scope, but the ladder itself, 
     //          i.e. the head [WordNode], should NOT be freed. 
     //---------------------------------------------------------
-    return NULL; //modify this
+
+    if (!(*list)){
+        return NULL;
+    }
+    
+    WordNode* ladderHead = (*list)->topWord;
+
+    LadderNode* nextLadder = (*list)->next;
+    free(*list);
+    *list = nextLadder;
+
+    return ladderHead;
 }
 
 void freeLadderList(LadderNode* myList) {
@@ -256,6 +267,20 @@ void freeLadderList(LadderNode* myList) {
     //           - then, free the space allocated for the 
     //                  [LadderNode] itself 
     //---------------------------------------------------------
+
+    while (myList){
+        WordNode* currentWord = myList->topWord;
+
+        while (currentWord){
+            WordNode* tempWordNode = currentWord->next;
+            free(currentWord);
+            currentWord = tempWordNode;
+        }
+
+        LadderNode* nextLadder = myList->next;
+        free(myList);
+        myList = nextLadder;
+    }
 }
 
 WordNode* findShortestWordLadder(   char** words, 
