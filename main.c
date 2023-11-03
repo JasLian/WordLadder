@@ -209,6 +209,24 @@ void insertLadderAtBack(LadderNode** list, WordNode* newLadder) {
     //          must handle the edge case where <list> is empty
     //          and the new [LadderNode] becomes the head node
     //---------------------------------------------------------
+
+    LadderNode* newNode = malloc(sizeof(LadderNode));
+    newNode->topWord = newLadder;
+    newNode->next = NULL;
+
+    if (!(*list)){
+        (*list) = newNode;
+        return;
+    }
+
+    LadderNode* current = *list;
+
+    while (current->next){
+        current = current->next;
+    }
+
+    current->next = newNode;
+
 }
 
 WordNode* popLadderFromFront(LadderNode** list) {
