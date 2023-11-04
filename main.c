@@ -214,31 +214,61 @@ void freeLadderList(LadderNode* myList) {
     }
 }
 
+void neighborNotFinal(WordNode* origLadder, char* neighbor, LadderNode** list){
+
+    WordNode* anotherLadder = copyLadder(origLadder);
+    // freeLadder(origLadder);
+    insertWordAtFront(&anotherLadder, neighbor);
+    insertLadderAtBack(list, anotherLadder);
+    
+}
+
 WordNode* findShortestWordLadder(   char** words, 
                                     bool* usedWord, 
                                     int numWords, 
                                     int wordSize, 
                                     char* startWord, 
                                     char* finalWord ) {
-    //---------------------------------------------------------
-    // TODO - write findShortestWordLadder()
-    //          run algorithm to find the shortest word ladder
-    //          from <startWord> to <finalWord> in the <words>
-    //          word array, where each word is <wordSize> long 
-    //          and there are <numWords> total words;
-    //          <usedWord> also has size <numWords>, such that
-    //          usedWord[i] is only true if words[i] has 
-    //          previously be entered into a ladder, and should
-    //          therefore not be added to any other ladders; 
-    //          the algorithm creates partial word ladders, 
-    //          which are [WordNode] linked lists, and stores 
-    //          them in a [LadderNode] linked list. 
-    //              return a pointer to the shortest ladder;
-    //              return NULL if no ladder is possible;
-    //                  before return, free all heap-allocated 
-    //                  memory that is created here that is not 
-    //                  the returned ladder
-    //---------------------------------------------------------
+    LadderNode* myList = NULL;
+    WordNode* myLadder = NULL;
+
+    insertWordAtFront(&myLadder, startWord);
+    insertLadderAtBack(&myList, myLadder);
+
+    while (myList){
+        myLadder = popLadderFromFront(&myList);
+
+        for (int i = 0; i < wordSize; i++){
+            char origLetter = myLadder->myWord[i];
+
+            for (int j = 0; j < 26; j++){
+                char currWord[wordSize + 1];
+                strcpy(currWord, myLadder->myWord);
+                currWord[i] = 'a' + j;
+                int idx = findWord(words, currWord, 0, numWords - 1);
+
+
+                if (idx != -1){
+                    
+                    if (usedWord[idx]){
+                        continue;
+                    }
+
+                    usedWord[idx] = true;
+
+                    if (strcmp(currWord, finalWord) == 0){
+                        insertWordAtFront(&myLadder, words[idx]);
+                        return myLadder;
+                    }
+                    else{
+                        neighborNotFinal(myLadder, words[idx], &myList);
+                    }
+                }
+            }
+
+        }
+
+    }
     
     
     return NULL;
@@ -366,6 +396,8 @@ int main() {
         return -1;
     }
     printf("Done!\n"); 
+
+    printf("Word at idx 9311: %s\n", words[9311]);
 
     // set the two ends of the word ladder using interactive user-input
     //  make sure start and final words are in the word array, 
