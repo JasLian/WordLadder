@@ -97,14 +97,6 @@ int findWord(char** words, char* aWord, int loInd, int hiInd) {
 }
 
 void freeWords(char** words, int numWords) {
-    //---------------------------------------------------------
-    // TODO - write freeWords()
-    //          free up all heap-allocated space for <words>,
-    //          which is an array of <numWords> C-strings
-    //           - free the space allocated for each C-string 
-    //           - then, free the space allocated for the array
-    //                  of pointers, <words>, itself
-    //---------------------------------------------------------
 
     for (int i = 0; i < numWords; i++){
         free(words[i]);
@@ -115,16 +107,6 @@ void freeWords(char** words, int numWords) {
 }
 
 void insertWordAtFront(WordNode** ladder, char* newWord) {
-    //---------------------------------------------------------
-    // TODO - write insertWordAtFront()
-    //          allocate space for a new [WordNode], set its 
-    //          [myWord] subitem using <newWord> and insert
-    //          it to the front of <ladder>, which is a 
-    //          pointer-passed-by-pointer as the head node of 
-    //          ladder changes inside this function; 
-    //          <newWord> is a pointer to a C-string from the 
-    //          full word array, already heap-allocated
-    //---------------------------------------------------------
 
     WordNode* newNode = malloc(sizeof(WordNode));
     newNode->myWord = newWord;
@@ -134,10 +116,6 @@ void insertWordAtFront(WordNode** ladder, char* newWord) {
 }
 
 int getLadderHeight(WordNode* ladder) {
-    //---------------------------------------------------------
-    // TODO - write getLadderHeight()
-    //          find & return number of words in <ladder> list
-    //---------------------------------------------------------
 
     if (!ladder){
         return 0;
@@ -149,15 +127,6 @@ int getLadderHeight(WordNode* ladder) {
 }
 
 WordNode* copyLadder(WordNode* ladder) {
-    //---------------------------------------------------------
-    // TODO - write copyLadder()
-    //          make a complete copy of <ladder> and return it;
-    //          the copy ladder must have new space allocated
-    //          for each [WordNode] in <ladder>, BUT the
-    //          C-string pointers to elements of the full word  
-    //          array can be reused; i.e. the actual words do 
-    //          NOT need another allocation here
-    //---------------------------------------------------------
 
     if (!ladder){
         return NULL; 
@@ -184,13 +153,7 @@ WordNode* copyLadder(WordNode* ladder) {
 }
 
 void freeLadder(WordNode* ladder) {
-    //---------------------------------------------------------
-    // TODO - write freeLadder()
-    //          free up all heap-allocated space for <ladder>;
-    //          this does NOT include the actual words, 
-    //          instead just free up the space that was 
-    //          allocated for each [WordNode]
-    //---------------------------------------------------------
+
     while (ladder){
         WordNode* temp = ladder->next;
         free(ladder);
@@ -199,16 +162,6 @@ void freeLadder(WordNode* ladder) {
 }
 
 void insertLadderAtBack(LadderNode** list, WordNode* newLadder) {
-    //---------------------------------------------------------
-    // TODO - write insertLadderAtBack()
-    //          allocate space for a new [LadderNode], set its 
-    //          [topWord] subitem using <newLadder>; then, find
-    //          the back of <list> and append the newly created
-    //          [LadderNode] to the back; Note that <list> is a 
-    //          pointer-passed-by-pointer, since this function 
-    //          must handle the edge case where <list> is empty
-    //          and the new [LadderNode] becomes the head node
-    //---------------------------------------------------------
 
     LadderNode* newNode = malloc(sizeof(LadderNode));
     newNode->topWord = newLadder;
