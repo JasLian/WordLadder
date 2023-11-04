@@ -79,11 +79,11 @@ int findWord(char** words, char* aWord, int loInd, int hiInd) {
 
     int midInd = (loInd + hiInd) / 2;
 
-    if (strcmp(words[midInd], aWord) == 0){
-        return midInd;
-    }
-    else if (loInd > hiInd){
+    if (loInd > hiInd){
         return -1;
+    }
+    else if (strcmp(words[midInd], aWord) == 0){
+        return midInd;
     }
     else{
         if (strcmp(aWord, words[midInd]) < 0){
@@ -395,8 +395,6 @@ int main() {
         return -1;
     }
     printf("Done!\n"); 
-
-    printf("Word at idx 9311: %s\n", words[9311]);
 
     // set the two ends of the word ladder using interactive user-input
     //  make sure start and final words are in the word array, 

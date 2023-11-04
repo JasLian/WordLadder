@@ -13,9 +13,6 @@ valgrind:
 gdb:
 	gdb program.exe
 
-blank:
-	gcc blank.c -o blank.exe
-
-rblank:
-	./blank.exe
-
+demo:
+	./demo.exe
+	
