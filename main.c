@@ -200,13 +200,8 @@ WordNode* popLadderFromFront(LadderNode** list) {
 void freeLadderList(LadderNode* myList) {
 
     while (myList){
-        WordNode* currentWord = myList->topWord;
 
-        while (currentWord){
-            WordNode* tempWordNode = currentWord->next;
-            free(currentWord);
-            currentWord = tempWordNode;
-        }
+        freeLadder(myList->topWord);
 
         LadderNode* nextLadder = myList->next;
         free(myList);
@@ -217,7 +212,6 @@ void freeLadderList(LadderNode* myList) {
 void neighborNotFinal(WordNode* origLadder, char* neighbor, LadderNode** list){
 
     WordNode* anotherLadder = copyLadder(origLadder);
-    // freeLadder(origLadder);
     insertWordAtFront(&anotherLadder, neighbor);
     insertLadderAtBack(list, anotherLadder);
     
@@ -239,7 +233,6 @@ WordNode* findShortestWordLadder(   char** words,
         myLadder = popLadderFromFront(&myList);
 
         for (int i = 0; i < wordSize; i++){
-            char origLetter = myLadder->myWord[i];
 
             for (int j = 0; j < 26; j++){
                 char currWord[wordSize + 1];
@@ -258,7 +251,12 @@ WordNode* findShortestWordLadder(   char** words,
 
                     if (strcmp(currWord, finalWord) == 0){
                         insertWordAtFront(&myLadder, words[idx]);
-                        return myLadder;
+
+                        WordNode* temp = copyLadder(myLadder);
+
+                        freeLadderList(myList);
+                        freeLadder(myLadder);
+                        return temp;
                     }
                     else{
                         neighborNotFinal(myLadder, words[idx], &myList);
@@ -268,8 +266,9 @@ WordNode* findShortestWordLadder(   char** words,
 
         }
 
+        freeLadder(myLadder);
+
     }
-    
     
     return NULL;
 }
