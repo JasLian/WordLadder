@@ -183,21 +183,8 @@ void insertLadderAtBack(LadderNode** list, WordNode* newLadder) {
 }
 
 WordNode* popLadderFromFront(LadderNode** list) {
-    //---------------------------------------------------------
-    // TODO - write popLadderFromFront()
-    //          pop the first Ladder from the front of the list
-    //          by returning the pointer to the head node 
-    //          of <list> AND updating the head node of <list>
-    //          to the next [LadderNode]; Note that <list> is a 
-    //          pointer-passed-by-pointer, since this function 
-    //          updates the head node to be one down the list;
-    //          the [LadderNode] popped off the front must have
-    //          its memory freed in this function, since it 
-    //          will go out of scope, but the ladder itself, 
-    //          i.e. the head [WordNode], should NOT be freed. 
-    //---------------------------------------------------------
 
-    if (!(*list)){
+   if (!(*list)){
         return NULL;
     }
     
@@ -211,15 +198,6 @@ WordNode* popLadderFromFront(LadderNode** list) {
 }
 
 void freeLadderList(LadderNode* myList) {
-    //---------------------------------------------------------
-    // TODO - write freeLadderList()
-    //          free up all heap-allocated space for <myList>;
-    //          for each ladder in <myList>:
-    //           - free the space allocated for each [WordNode] 
-    //                  in the ladder using freeLadder()
-    //           - then, free the space allocated for the 
-    //                  [LadderNode] itself 
-    //---------------------------------------------------------
 
     while (myList){
         WordNode* currentWord = myList->topWord;
