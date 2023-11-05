@@ -2,7 +2,7 @@ build:
 	gcc main.c -o program.exe
 
 run:
-	./program.exe
+	./program.exe < input.txt
 
 debug:
 	gcc -g main.c -o program.exe
